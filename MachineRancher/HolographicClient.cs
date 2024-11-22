@@ -64,6 +64,8 @@ namespace MachineRancher
          *      - Maintain state, so when we switch between printers we can resume where we were
          *      
          *      TODO: Adapt logic to divide interface logic based on machine type. Might be wise to separate these into separate methods, that way it is easily extensible.
+         *      
+         *      Notes on adaptation: Messages are sent via a singular string. Messages are split into args where the is a '~' character. Need to send args with printer~ prefix for printer commands, and cnc~ prefix for cnc machine commands. 
          */
         protected override async Task MainLoop(CancellationToken token)
         {
@@ -77,6 +79,14 @@ namespace MachineRancher
                         string[] args = incoming_msg.Split('~');
                         switch (args[0])
                         {
+                            case "printer":
+                                {
+                                    //TODO: Move printer cases to a function to clean code
+                                }
+                            case "cnc":
+                                {
+                                    //TODO: Determine cases for cnc functionality and make a function to handle them!
+                                }
                             case "discovered_machine":
                                 {
                                     Machine target = this.current_machines.Keys.Where((machine) => { return machine.Name.Equals(args[1]); }).FirstOrDefault();
